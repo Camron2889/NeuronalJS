@@ -14,7 +14,7 @@ neuronal._precomp = neuronal._precomp || {};
         this.g = g;
         this.b = b;
         this.a = a;
-    }
+    };
     
     const proto = Color.prototype;
     
