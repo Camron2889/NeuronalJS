@@ -32,7 +32,7 @@
     proto.restoreDefaults = function() {
         const keys = Object.keys(_defaults);
         for (let i = 0; i < keys.length; i++) {
-            this[keys[i]] = this.defaults[keys[i]];
+            this[keys[i]] = _defaults[keys[i]];
         }
     };
     
@@ -51,8 +51,8 @@
     
     proto.newEdge = function(vertex0, vertex1) {
         const edge = [vertex0, vertex1];
-        vertex0.neightbors.push(vertex1);
-        vertex1.neightbors.push(vertex0);
+        vertex0.neighbors.push(vertex1);
+        vertex1.neighbors.push(vertex0);
         this.edgeList.push(edge);
         return edge;
     };
