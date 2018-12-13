@@ -1,4 +1,4 @@
-//requires: linkedvertexList.js vector2.js
+//requires: linkedlist.js
 
 //class
 (function() {
