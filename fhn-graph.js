@@ -60,17 +60,17 @@
     proto.reset = function() {
         this.restoreDefaults();
         
-        let vertex = this.vertices.begin();
+        let vertex = this.vertexList.begin();
         while(vertex !== null) {
             vertex.u = this.uDefault;
             vertex.v = this.vDefault;
             vertex.f = null;
-            vertex = this.vertices.next();
+            vertex = this.vertexList.next();
         }
     };
     
     proto.calculate = function() {
-        let vertex = this.vertices.begin();
+        let vertex = this.vertexList.begin();
         while(vertex !== null) {
             vertex.f = vertex.v * (1 - (Math.pow(vertex.v, 2) / 3));
             const newU = (vertex.v + this.beta - this.gamma * vertex.u) * this.deltaT + vertex.u;
@@ -78,7 +78,7 @@
             vertex.u = newU;
             vertex.v = newV;
             
-            vertex = this.vertices.next();
+            vertex = this.vertexList.next();
         }
     };
     
@@ -87,15 +87,15 @@
         const dx = deltaX / 10;
         const vForce = dx / (deltaX * deltaX);
         
-        let vertex = this.vertices.begin();
+        let vertex = this.vertexList.begin();
         while(vertex !== null) {
             let vSum = 0;
             let n = 0;
-            for (let i = 0; i < vertex.neightbors.length; i++) {
-                const neighbor = vertex.neightbors[i];
+            for (let i = 0; i < vertex.neighbors.length; i++) {
+                const neighbor = vertex.neighbors[i];
                 if (neighbor.enabled) {
                     ++n;
-                    vSum += neightbor.v
+                    vSum += neighbor.v
                 }
             }
             
@@ -103,7 +103,7 @@
             const vEffect = vDifference * vForce;
             vertex.v += vEffect;
             
-            vertex = this.vertices.next();
+            vertex = this.vertexList.next();
         }
     };
     
@@ -129,6 +129,13 @@
         this.newEdge(prevVertex, firstVertex);
         
         return firstVertex;
+    };
+    
+    proto.createCircle2 = function(centerX, centerY, radius, targetDistance, angleOffset = 0) {
+        const n = -2 * radius * radius;
+        const targetAngle = Math.acos((targetDistance * targetDistance + n) / n);
+        const sides = Math.round(Math.PI * 2 / targetAngle);
+        return this.createCircle2(centerX, centerY, radius, sides, angleOffset);
     };
     
     neuronal.FhnGraph = FhnGraph;
