@@ -107,7 +107,7 @@
         }
     };
     
-    proto.createCircle = function(centerX, centerY, radius, sides, angleOffset = 0) {        
+    proto.createPolygon = function(centerX, centerY, radius, sides, angleOffset = 0) {        
         let angle = angleOffset;
         let x = Math.cos(angle) * radius + centerX;
         let y = Math.sin(angle) * radius + centerY;
@@ -131,11 +131,11 @@
         return firstVertex;
     };
     
-    proto.createCircle2 = function(centerX, centerY, radius, targetDistance, angleOffset = 0) {
+    proto.createCircle = function(centerX, centerY, radius, targetDistance, angleOffset = 0) {
         const n = -2 * radius * radius;
         const targetAngle = Math.acos((targetDistance * targetDistance + n) / n);
         const sides = Math.round(Math.PI * 2 / targetAngle);
-        return this.createCircle2(centerX, centerY, radius, sides, angleOffset);
+        return this.createPolygon(centerX, centerY, radius, sides, angleOffset);
     };
     
     neuronal.FhnGraph = FhnGraph;
