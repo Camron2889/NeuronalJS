@@ -39,7 +39,7 @@ this.neuronal = this.neuronal || {};
     proto.restoreDefaults = function() {
         const keys = Object.keys(_defaults);
         for (let i = 0; i < keys.length; i++) {
-            this[keys[i]] = this.defaults[keys[i]];
+            this[keys[i]] = _defaults[keys[i]];
         }
     };
     
