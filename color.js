@@ -81,7 +81,7 @@ neuronal._precomp = neuronal._precomp || {};
                     h *= ((g - b) / range) % 6;
                     break;
                 case g:
-                    h *= ((b - r) / range) + 2
+                    h *= ((b - r) / range) + 2;
                     break;
                 case b:
                     h *= ((r - g) / range) + 4;
