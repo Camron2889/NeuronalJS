@@ -1,4 +1,4 @@
-//requires: linkedlist.js
+//requires: linkedlist.js, vector3.js
 
 //class
 (function() {
@@ -49,10 +49,17 @@
         return vertex;
     };
     
-    proto.newEdge = function(vertex0, vertex1) {
-        const edge = [vertex0, vertex1];
+    proto.newEdge = function(vertex0, vertex1, weight = 1) {
+        const edge = [vertex0, vertex1, weight];
         vertex0.neighbors.push(vertex1);
         vertex1.neighbors.push(vertex0);
+        this.edgeList.push(edge);
+        return edge;
+    };
+    
+    proto.newDirectedEdge = function(vertex0, vertex1, weight = 1) {
+        const edge = [vertex0, vertex1, weight];
+        vertex0.neighbors.push(vertex1);
         this.edgeList.push(edge);
         return edge;
     };
@@ -131,11 +138,20 @@
         return firstVertex;
     };
     
-    proto.createCircle = function(centerX, centerY, radius, targetDistance, angleOffset = 0) {
+    proto.createCircle = function(centerX, centerY, radius, targetDist, angleOffset = 0) {
         const n = -2 * radius * radius;
-        const targetAngle = Math.acos((targetDistance * targetDistance + n) / n);
+        const targetAngle = Math.acos((targetDist * targetDist + n) / n);
         const sides = Math.round(Math.PI * 2 / targetAngle);
         return this.createPolygon(centerX, centerY, radius, sides, angleOffset);
+    };
+    
+    proto.createLineBetween = function(vertex0, vertex1, targetDist) {
+        const mag = vertex0.
+    };
+    
+    proto.createLine = function(x1, y1, x2, y2, targetDist, directed = false) {
+        const mag = Math.sqrt((x2 - x1)^2 + (y2 - y1)^2);
+        const 
     };
     
     neuronal.FhnGraph = FhnGraph;
