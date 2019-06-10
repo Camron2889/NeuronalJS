@@ -149,12 +149,30 @@
     };
     
     proto.createLineBetween = function(vertex0, vertex1, targetDist) {
-        const mag = vertex0.
+        const mag = vertex1.position.clone().subtract(vertex0).getMagnitude();
+        let numEdges;
+        if (targetDist > mag) {
+            numEdges = 1;
+        } else {
+            numEdges = Math.round(mag / targetDist;);
+        }
+        const edgeLength = mag / numEdges;
+        const unitEdge = vertex1.position.clone().subtract(vertex0).normalize().scale(edgeLength);
+        
+        
+        let prevVertex = vertex0;
+        
+        for (let i = 0; i < numEdges - 1; i++) {
+            const p = prevVertex.position.clone().add(unitEdge);
+            const newVertex = this.newVertex(p.x, p.y, p.z);
+            this.newEdge(prevVertex, newVertex);
+            prevVertex = newVertex;
+        }
+        this.newEdge(prevVertex, vertex1);
     };
     
     proto.createLine = function(x1, y1, x2, y2, targetDist, directed = false) {
         const mag = Math.sqrt((x2 - x1)^2 + (y2 - y1)^2);
-        const 
     };
     
     neuronal.FhnGraph = FhnGraph;
