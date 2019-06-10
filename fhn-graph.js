@@ -18,6 +18,9 @@
         vDefault: -1.13
     };
     
+    //shortcuts
+    const Vector3 = neuronal.Vector3;
+    
     //constructor
     const FhnGraph = function() {
         this.restoreDefaults();
@@ -36,15 +39,15 @@
         }
     };
     
-    proto.newVertex = function(x = 0, y = 0) {
+    proto.newVertex = function(x = 0, y = 0, z = 0) {
         const vertex = {
-            position: {x, y},
             neighbors: [],
             u: this.uDefault,
             v: this.vDefault,
             f: null,
             enabled: true
         };
+        vertex.position = new Vector3(x, y, z);
         this.vertexList.push(vertex);
         return vertex;
     };
