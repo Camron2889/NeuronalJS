@@ -149,15 +149,15 @@
     };
     
     proto.createLineBetween = function(vertex0, vertex1, targetDist) {
-        const mag = vertex1.position.clone().subtract(vertex0).getMagnitude();
+        const mag = vertex1.position.clone().subtract(vertex0.position).getMagnitude();
         let numEdges;
         if (targetDist > mag) {
             numEdges = 1;
         } else {
-            numEdges = Math.round(mag / targetDist;);
+            numEdges = Math.round(mag / targetDist);
         }
         const edgeLength = mag / numEdges;
-        const unitEdge = vertex1.position.clone().subtract(vertex0).normalize().scale(edgeLength);
+        const unitEdge = vertex1.position.clone().subtract(vertex0.position).normalize().scale(edgeLength);
         
         
         let prevVertex = vertex0;
