@@ -62,7 +62,7 @@
     
     proto.newDirectedEdge = function(vertex0, vertex1, weight = 1) {
         const edge = [vertex0, vertex1, weight];
-        vertex0.neighbors.push([vertex1, edge]);
+        vertex1.neighbors.push([vertex0, edge]);
         this.edgeList.push(edge);
         return edge;
     };
