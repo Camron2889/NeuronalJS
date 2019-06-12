@@ -117,6 +117,53 @@
         }
     };
     
+    proto.removeEdge = function(edge) {
+        for (let v = 0; v < 2; v++) {
+            const vert = edge[v];
+            for (let n = 0; n < vert.neighbors.length; n++) {
+                console.log(n);
+                const neighborEdge = vert.neighbors[n][1];
+                if (neighborEdge === edge) {
+                    vert.neighbors.splice(n, 1);
+                    break;
+                }
+            }
+        }
+        let currentEdge = graph.edgeList.begin();
+        while (currentEdge !== null) {
+            if (currentEdge === edge) {
+                graph.edgeList.removeHere();
+            }
+            
+            currentEdge = graph.edgeList.next();
+        }
+    };
+    
+    proto.removeVertex = function(vertex) {
+        for (let n = 0; n < vertex.neighbors.length; n++) {
+            this.removeEdge(vertex.neighbors[n][1]);
+            --n;
+        }
+        
+        let currentVertex = graph.vertexList.begin();
+        while (currentVertex !== null) {
+            if (currentVertex === vertex) {
+                graph.vertexList.removeHere();
+            }
+            
+            currentVertex = graph.vertexList.next();
+        }
+    };
+    
+    proto.mergeVertices = function(vertex0, vertex1) {
+        let currentVertex = graph.vertexList.begin();
+        while (currentVertex !== null) {
+            //NOT IMPLEMENTED
+            
+            currentVertex = graph.vertexList.next();
+        }
+    };
+    
     proto.createPolygon = function(centerX, centerY, radius, sides, angleOffset = 0) {        
         let angle = angleOffset;
         let x = Math.cos(angle) * radius + centerX;
