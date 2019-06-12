@@ -54,15 +54,15 @@
     
     proto.newEdge = function(vertex0, vertex1, weight = 1) {
         const edge = [vertex0, vertex1, weight];
-        vertex0.neighbors.push(vertex1);
-        vertex1.neighbors.push(vertex0);
+        vertex0.neighbors.push([vertex1, edge]);
+        vertex1.neighbors.push([vertex0, edge]);
         this.edgeList.push(edge);
         return edge;
     };
     
     proto.newDirectedEdge = function(vertex0, vertex1, weight = 1) {
         const edge = [vertex0, vertex1, weight];
-        vertex0.neighbors.push(vertex1);
+        vertex0.neighbors.push([vertex1, edge]);
         this.edgeList.push(edge);
         return edge;
     };
@@ -102,7 +102,7 @@
             let vSum = 0;
             let n = 0;
             for (let i = 0; i < vertex.neighbors.length; i++) {
-                const neighbor = vertex.neighbors[i];
+                const neighbor = vertex.neighbors[i][0];
                 if (neighbor.enabled) {
                     ++n;
                     vSum += neighbor.v
@@ -148,7 +148,7 @@
         return this.createPolygon(centerX, centerY, radius, sides, angleOffset);
     };
     
-    proto.createLineBetween = function(vertex0, vertex1, targetDist) {
+    proto.createLineBetween = function(vertex0, vertex1, targetDist, directed = false) {
         const mag = vertex1.position.clone().subtract(vertex0.position).getMagnitude();
         let numEdges;
         if (targetDist > mag) {
@@ -159,20 +159,25 @@
         const edgeLength = mag / numEdges;
         const unitEdge = vertex1.position.clone().subtract(vertex0.position).normalize().scale(edgeLength);
         
+        const makeEdge = directed ? this.newDirectedEdge.bind(this) : this.newEdge.bind(this);
         
         let prevVertex = vertex0;
         
         for (let i = 0; i < numEdges - 1; i++) {
             const p = prevVertex.position.clone().add(unitEdge);
             const newVertex = this.newVertex(p.x, p.y, p.z);
-            this.newEdge(prevVertex, newVertex);
+            makeEdge(prevVertex, newVertex);
             prevVertex = newVertex;
         }
-        this.newEdge(prevVertex, vertex1);
+
+        makeEdge(prevVertex, vertex1);
     };
     
-    proto.createLine = function(x1, y1, x2, y2, targetDist, directed = false) {
-        const mag = Math.sqrt((x2 - x1)^2 + (y2 - y1)^2);
+    proto.createLine = function(x0, y0, x1, y1, targetDist, directed = false) {
+        const vert0 = this.newVertex(x0, y0);
+        const vert1 = this.newVertex(x1, y1);
+        this.createLineBetween(vert0, vert1, targetDist, directed);
+        return [vert0, vert1];
     };
     
     neuronal.FhnGraph = FhnGraph;
