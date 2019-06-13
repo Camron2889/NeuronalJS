@@ -27,6 +27,7 @@
         
         this.vertexList = new neuronal.LinkedList();
         this.edgeList = new neuronal.LinkedList();
+        this.directedEdgeList = new neuronal.LinkedList();
     };
     
     const proto = FhnGraph.prototype;
@@ -53,7 +54,7 @@
     };
     
     proto.newEdge = function(vertex0, vertex1, weight = 1) {
-        const edge = [vertex0, vertex1, weight];
+        const edge = [vertex0, vertex1, weight, false];
         vertex0.neighbors.push([vertex1, edge]);
         vertex1.neighbors.push([vertex0, edge]);
         this.edgeList.push(edge);
@@ -61,9 +62,9 @@
     };
     
     proto.newDirectedEdge = function(vertex0, vertex1, weight = 1) {
-        const edge = [vertex0, vertex1, weight];
+        const edge = [vertex0, vertex1, weight, true];
         vertex1.neighbors.push([vertex0, edge]);
-        this.edgeList.push(edge);
+        this.directedEdgeList.push(edge);
         return edge;
     };
     
@@ -132,13 +133,14 @@
                 }
             }
         }
-        let currentEdge = this.edgeList.begin();
+        const list = edge[4] ? this.directedEdgeList : this.edgeList;
+        let currentEdge = list.begin();
         while (currentEdge !== null) {
             if (currentEdge === edge) {
-                this.edgeList.removeHere();
+                list.removeHere();
             }
             
-            currentEdge = this.edgeList.next();
+            currentEdge = list.next();
         }
     };
     
