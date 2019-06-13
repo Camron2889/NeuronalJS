@@ -105,7 +105,10 @@
                 const neighbor = vertex.neighbors[i][0];
                 if (neighbor.enabled) {
                     ++n;
-                    vSum += neighbor.v
+                    const edge = vertex.neighbors[i][1];
+                    const vDiff = _defaults.vDefault - neighbor.v;
+                    
+                    vSum += _defaults.vDefault + vDiff * edge[2];
                 }
             }
             
