@@ -107,7 +107,7 @@
                 if (neighbor.enabled) {
                     ++n;
                     const edge = vertex.neighbors[i][1];
-                    const vDiff = _defaults.vDefault - neighbor.v;
+                    const vDiff = neighbor.v - _defaults.vDefault;
                     
                     vSum += _defaults.vDefault + vDiff * edge[2];
                 }
