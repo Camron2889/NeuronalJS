@@ -132,13 +132,13 @@
                 }
             }
         }
-        let currentEdge = graph.edgeList.begin();
+        let currentEdge = this.edgeList.begin();
         while (currentEdge !== null) {
             if (currentEdge === edge) {
-                graph.edgeList.removeHere();
+                this.edgeList.removeHere();
             }
             
-            currentEdge = graph.edgeList.next();
+            currentEdge = this.edgeList.next();
         }
     };
     
@@ -148,22 +148,22 @@
             --n;
         }
         
-        let currentVertex = graph.vertexList.begin();
+        let currentVertex = this.vertexList.begin();
         while (currentVertex !== null) {
             if (currentVertex === vertex) {
-                graph.vertexList.removeHere();
+                this.vertexList.removeHere();
             }
             
-            currentVertex = graph.vertexList.next();
+            currentVertex = this.vertexList.next();
         }
     };
     
     proto.mergeVertices = function(vertex0, vertex1) {
-        let currentVertex = graph.vertexList.begin();
+        let currentVertex = this.vertexList.begin();
         while (currentVertex !== null) {
             //NOT IMPLEMENTED
             
-            currentVertex = graph.vertexList.next();
+            currentVertex = this.vertexList.next();
         }
     };
     
