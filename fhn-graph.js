@@ -4,7 +4,7 @@
 (function() {
     "use strict";
     
-    //private data
+    //private static data
     const _defaults = {
         gNa: 0.9,
         gK: 1.1,
@@ -15,7 +15,7 @@
         deltaT: 2 / 256,
 
         uDefault: -0.53,
-        vDefault: -1.13
+        vDefault: -1.13 //should be resting voltage
     };
     
     //shortcuts
