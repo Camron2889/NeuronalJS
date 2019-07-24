@@ -15,8 +15,9 @@ this.neuronal = this.neuronal || {};
 
         deltaT: 2 / 256,
 
-        uDefault: -0.53,
-        vDefault: -1.13 //should be resting voltage
+        uDefault: -0.530837665,
+        vDefault: -1.130837665, //should be resting voltage 
+        fDefault: -0.648801591
     };
     
     //constructor
@@ -38,14 +39,15 @@ this.neuronal = this.neuronal || {};
     proto.reset = function() {
         this.v = this.vDefault;
         this.u = this.uDefault;
+        this.f = this.fDefault;
     };
     
     proto.calculate = function() {
-        const f = this.v * (1 - (Math.pow(this.v, 2) / 3));
         const newU = (this.v + this.beta - this.gamma * this.u) * this.deltaT + this.u;
         const newV = 1 / this.c * (this.gNa * this.f - this.gK * this.u) * this.deltaT + this.v;
         this.u = newU;
         this.v = newV;
+        this.f = this.v * (1 - (Math.pow(this.v, 2) / 3));
     };
     
     neuronal.FhnNode = FhnNode;
