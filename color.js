@@ -113,5 +113,22 @@ neuronal._precomp = neuronal._precomp || {};
         return "#" + r + g + b;
     };
     
+    proto.toRgbaString = function() {
+        const r = Math.floor(this.r * 255);
+        const g = Math.floor(this.g * 255);
+        const b = Math.floor(this.b * 255);
+        return `rgba(${r}, ${g}, ${b}, ${this.a})`;
+    };
+    
+    proto.clone = function(target) {
+        target = target || new Color();
+        target.r = this.r;
+        target.g = this.g;
+        target.b = this.b;
+        target.a = this.a;
+        
+        return target;
+    };
+    
     neuronal.Color = Color;
 })();
